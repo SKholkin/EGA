@@ -16,7 +16,7 @@ def decode(order_coding):
         coding.append(normal_order_rev[order_coding[i]])
         for j in range(order_coding[i], len(order_coding) - 1):
             normal_order_rev[j] = normal_order_rev[j + 1]
-    return codinggit
+    return coding
 
 
 def check_condition(coding):
