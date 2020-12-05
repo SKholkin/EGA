@@ -3,7 +3,8 @@ from common import hamming_distance
 import numpy as np
 
 
-# random mating/ stochastic mating
+# TODO: check is it working
+#  random mating/ stochastic mating
 def panmixia(population, amount=None):
     population = np.array(population)
     if amount is None:
@@ -11,7 +12,7 @@ def panmixia(population, amount=None):
     return np.random.choice(population, amount)
 
 
-# check is it working
+# TODO: check is it working
 def PosAssMating(population, criterio, amount=None):
     if amount is None:
         amount = int(len(population) / 10)
@@ -21,7 +22,7 @@ def PosAssMating(population, criterio, amount=None):
     return np.random.choice(population, amount, prob_array)
 
 
-# check is it working
+# TODO: check is it working
 def NegAssMating(population, criterio, amount=None):
     if amount is None:
         amount = int(len(population) / 10)
