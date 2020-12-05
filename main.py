@@ -1,6 +1,7 @@
 from initialization.init import launch_init
 from utils import create_weight_matrix, print_weight_matrix
 from config import EGAConfig
+from breed.selection_from_population import selection
 
 
 # TODO: test this
@@ -20,6 +21,8 @@ class Criterio:
 def main_worker(config: EGAConfig):
     criterio = Criterio(config.weight_matrix)
     start_pop = launch_init(config)
+    population = start_pop
+    next_gen_pretendents = selection(population, criterio, config)
     # initializtion(start population)
     # cycle part begin
     # make some pretendents (reproduction/breeding)

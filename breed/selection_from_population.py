@@ -3,6 +3,16 @@ from common import hamming_distance
 import numpy as np
 
 
+def selection(population, criterio, config):
+    if config.selection.algorithm == 'PAM':
+        result = PosAssMating(population, criterio, config.selection.amount)
+    elif config.selection.algorithm == 'NAM':
+        result = NegAssMating(population, criterio, config.selection.amount)
+    else:
+        result = panmixia(population, config.selection.amount)
+    return result
+
+
 # TODO: check is it working
 #  random mating/ stochastic mating
 def panmixia(population, amount=None):

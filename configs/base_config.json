@@ -1,0 +1,8 @@
+{
+    "length" : 10,
+    "initialization": {
+        "algotithm": "nearest_city",
+        "amount": 20
+    },
+    "weight_matrix": "configs/10len_matr_0.txt"
+}
