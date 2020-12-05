@@ -56,6 +56,6 @@ def write_matr_into_file(matr, filename):
 # if __name__ == '__main__':
 #    length = 10
 #    matr = create_weight_matrix(15, max_weight=20)
-#    write_matr_into_file(matr, 'configs/15len_matr_0.txt')
-#    matr = create_weigth_matrix_from_file('configs/15len_matr_0.txt')
+#    write_matr_into_file(matr, 'configs/15len_matr.txt')
+#    matr = create_weigth_matrix_from_file('configs/15len_matr.txt')
 #    pass

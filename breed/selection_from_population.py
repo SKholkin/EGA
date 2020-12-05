@@ -5,38 +5,45 @@ import numpy as np
 
 def selection(population, criterio, config):
     if config.selection.algorithm == 'PAM':
-        result = PosAssMating(population, criterio, config.selection.amount)
+        result = PosAssMating(population, criterio, config.selection.get('ratio', None) * len(population))
     elif config.selection.algorithm == 'NAM':
-        result = NegAssMating(population, criterio, config.selection.amount)
+        result = NegAssMating(population, criterio, config.selection.get('ratio', None) * len(population))
     else:
-        result = panmixia(population, config.selection.amount)
+        result = panmixia(population, config.selection.get('ratio', None) * len(population))
     return result
 
 
-# TODO: check is it working
-#  random mating/ stochastic mating
 def panmixia(population, amount=None):
     population = np.array(population)
     if amount is None:
         amount = len(population) / 10
-    return np.random.choice(population, amount)
+    return random_choice(population, amount)
 
 
-# TODO: check is it working
+def random_choice(population, amount, prob_array=None):
+    if prob_array is None:
+        prob_array = [1 / len(population) for i in range(len(population))]
+    mapping_array = np.arange(len(population))
+    result = []
+    mapping_array = np.random.choice(mapping_array, size=int(amount), p=prob_array)
+    for i in mapping_array:
+        result.append(population[i])
+    return result
+
+
 def PosAssMating(population, criterio, amount=None):
     if amount is None:
         amount = int(len(population) / 10)
-    criterio_array = [criterio[vector] for vector in population]
+    criterio_array = [criterio(vector) for vector in population]
     sum_criterio = sum(criterio_array)
     prob_array = [iter_cr / sum_criterio for iter_cr in criterio_array]
-    return np.random.choice(population, amount, prob_array)
+    return random_choice(population, amount, prob_array)
 
 
-# TODO: check is it working
 def NegAssMating(population, criterio, amount=None):
     if amount is None:
         amount = int(len(population) / 10)
-    pop_criterio_array = [criterio[vector] for vector in population]
+    pop_criterio_array = [criterio(vector) for vector in population]
     sum_criterio = sum(pop_criterio_array)
     high_prob_array = []
     for iter_criterio in pop_criterio_array:
@@ -46,10 +53,10 @@ def NegAssMating(population, criterio, amount=None):
     sum_reverse_criterio = sum(low_pop_criterio_array)
     low_prob_array = []
     for iter_criterio_reverse in low_pop_criterio_array:
-        low_pop_criterio_array.append(iter_criterio_reverse / sum_reverse_criterio)
+        low_prob_array.append(iter_criterio_reverse / sum_reverse_criterio)
 
-    high_cr_half = np.random.choice(population, int(amount / 2), high_prob_array)
-    low_cr_half = np.random.choice(population, int(amount / 2), low_prob_array)
+    high_cr_half = random_choice(population, int(amount / 2), high_prob_array)
+    low_cr_half = random_choice(population, int(amount / 2), low_prob_array)
     output = []
     for i in range(len(high_cr_half)):
         output.append(high_cr_half[i])

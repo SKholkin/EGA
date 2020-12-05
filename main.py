@@ -13,8 +13,8 @@ class Criterio:
         vector = list(vector)
         output = 0
         for i in range(len(vector) - 1):
-            output += self.weight_matrix[vector[i], vector[i + 1]]
-        output += self.weight_matrix[vector[i + 1], vector[0]]
+            output += self.weight_matrix[vector[i]][vector[i + 1]]
+        output += self.weight_matrix[vector[i + 1]][vector[0]]
         return output
 
 
@@ -23,6 +23,7 @@ def main_worker(config: EGAConfig):
     start_pop = launch_init(config)
     population = start_pop
     next_gen_pretendents = selection(population, criterio, config)
+    print(next_gen_pretendents)
     # initializtion(start population)
     # cycle part begin
     # make some pretendents (reproduction/breeding)
@@ -40,10 +41,5 @@ def main_worker(config: EGAConfig):
 
 
 if __name__ == '__main__':
-    #config = EGAConfig()
-    #config.length = 10
-    #config.weight_matrix = create_weight_matrix(config.length, max_weight=20, symmetric=True)
-    #config.initialization.algorithm = 'random'
-    #config.initialization.amount = 15
     config = create_config('configs/base_config.json')
     main_worker(config)
