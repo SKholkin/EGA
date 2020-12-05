@@ -1,6 +1,6 @@
 from initialization.init import launch_init
 from utils import create_weight_matrix, print_weight_matrix
-from config import EGAConfig
+from config import EGAConfig, create_config
 from breed.selection_from_population import selection
 
 
@@ -40,9 +40,10 @@ def main_worker(config: EGAConfig):
 
 
 if __name__ == '__main__':
-    config = EGAConfig()
-    config.length = 10
-    config.weight_matrix = create_weight_matrix(config.length, max_weight=20, symmetric=True)
-    config.initialization.algorithm = 'random'
-    config.initialization.amount = 15
+    #config = EGAConfig()
+    #config.length = 10
+    #config.weight_matrix = create_weight_matrix(config.length, max_weight=20, symmetric=True)
+    #config.initialization.algorithm = 'random'
+    #config.initialization.amount = 15
+    config = create_config('configs/base_config.json')
     main_worker(config)
