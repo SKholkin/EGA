@@ -24,13 +24,3 @@ def check_condition(coding):
         if coding[i] > len(coding) - i - 1:
             return False
     return True
-
-
-# seems legit
-if __name__ == '__main__':
-    coding0 = [2, 4, 0, 3, 1]
-    coding = [9, 2, 1, 5, 3, 8, 6, 7, 0, 4]
-    encoding = encode(coding)
-    print(check_condition(encoding))
-    decoding = decode(encoding)
-    print(f'decoding: {decoding}')

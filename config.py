@@ -8,7 +8,7 @@ def create_config(path):
     config.upload_weight_matrix()
     return config
 
-
+# ToDo: initialize basic values for config
 class EGAConfig(Dict):
 
     @classmethod

@@ -47,7 +47,7 @@ def add_to_gen(gen, separators, i, parent1, parent2):
         return gen
 
 
-if __name__ == '__main__':
-    parent1 = [3, 4, 1, 2, 1]
-    parent2 = [2, 1, 3, 2, 1]
-    n_point_crossover(parent1, parent2, n=1, output=2)
+#if __name__ == '__main__':
+#    parent1 = [3, 4, 1, 2, 1]
+#    parent2 = [2, 1, 3, 2, 1]
+#    n_point_crossover(parent1, parent2, n=1, output=2)

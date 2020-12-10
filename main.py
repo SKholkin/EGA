@@ -2,7 +2,7 @@ from initialization.init import launch_init
 from utils import create_weight_matrix, print_weight_matrix
 from config import EGAConfig, create_config
 from breed.selection_from_population import selection
-from crossover.classic import single_point_crossover
+from crossover.launcher import launch_crossover
 from ordercoding import decode, encode
 
 
@@ -26,11 +26,7 @@ def main_worker(config: EGAConfig):
     population = [encode(x) for x in start_pop]
 
     print(population)
-    next_gen_parents = selection(population, criterio, config)
-    print(next_gen_parents)
-    next_gen_pretendents = single_point_crossover(next_gen_parents[0], next_gen_parents[1])
-    print(f'parents {next_gen_parents[0]}    {next_gen_parents[1]}')
-    print(f'children {next_gen_pretendents}')
+    next_gen_parents = selection(population, config, criterio)
     # initializtion(start population)
     # cycle part begin
     # make some pretendents (reproduction/breeding)
@@ -39,12 +35,13 @@ def main_worker(config: EGAConfig):
     pass
 
 
-# def evolution_cycle(popualtion, max_iter=1000):
-#    amount = int(len(popualtion) / 100)
-#    for i in range(max_iter):
-#        to_breed = choose_parents(population, amount)
-#        pretendents = breed(to_breed)
-#    pass
+def evolution_cycle(popualtion, config, criterio, max_iter=1000):
+    for i in range(max_iter):
+        to_breed = selection(popualtion, config, criterio)
+        descendants = launch_crossover(to_breed, config)
+        # mutation
+        # get mutated descendatns
+    pass
 
 
 if __name__ == '__main__':

@@ -8,5 +8,10 @@
     "selection": {
         "algorithm": "NAM",
         "ratio": 0.1
-    }
+    },
+    "mutation": {
+        "prob": 0.05,
+        "is_additional": false
+    },
+    "crossover": "single"
 }
