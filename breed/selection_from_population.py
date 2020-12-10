@@ -10,7 +10,8 @@ def selection(population, criterio, config):
         result = NegAssMating(population, criterio, config.selection.get('ratio', None) * len(population))
     else:
         result = panmixia(population, config.selection.get('ratio', None) * len(population))
-    return result
+    result = list(result)
+    return [list(i) for i in result]
 
 
 def panmixia(population, amount=None):

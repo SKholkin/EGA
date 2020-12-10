@@ -2,6 +2,8 @@ from initialization.init import launch_init
 from utils import create_weight_matrix, print_weight_matrix
 from config import EGAConfig, create_config
 from breed.selection_from_population import selection
+from crossover.classic import single_point_crossover
+from ordercoding import decode, encode
 
 
 # TODO: test this
@@ -21,9 +23,14 @@ class Criterio:
 def main_worker(config: EGAConfig):
     criterio = Criterio(config.weight_matrix)
     start_pop = launch_init(config)
-    population = start_pop
-    next_gen_pretendents = selection(population, criterio, config)
-    print(next_gen_pretendents)
+    population = [encode(x) for x in start_pop]
+
+    print(population)
+    next_gen_parents = selection(population, criterio, config)
+    print(next_gen_parents)
+    next_gen_pretendents = single_point_crossover(next_gen_parents[0], next_gen_parents[1])
+    print(f'parents {next_gen_parents[0]}    {next_gen_parents[1]}')
+    print(f'children {next_gen_pretendents}')
     # initializtion(start population)
     # cycle part begin
     # make some pretendents (reproduction/breeding)

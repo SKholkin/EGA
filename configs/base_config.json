@@ -6,7 +6,7 @@
     },
     "weight_matrix": "configs/10len_matr.txt",
     "selection": {
-        "algorithm": "panmixia",
+        "algorithm": "NAM",
         "ratio": 0.1
     }
 }
