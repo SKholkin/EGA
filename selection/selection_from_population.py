@@ -5,9 +5,9 @@ import numpy as np
 
 def selection(population, config, criterio):
     if config.selection.algorithm == 'PAM':
-        result = PosAssMating(population, criterio, config.selection.get('ratio', None) * len(population))
+        result = PosAssMating(population, criterio, config.selection.get('ratio', 0) * len(population))
     elif config.selection.algorithm == 'NAM':
-        result = NegAssMating(population, criterio, config.selection.get('ratio', None) * len(population))
+        result = NegAssMating(population, criterio, config.selection.get('ratio', 0) * len(population))
     else:
         result = panmixia(population, config.selection.get('ratio', None) * len(population))
     result = list(result)

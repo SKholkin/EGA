@@ -51,6 +51,10 @@ def write_matr_into_file(matr, filename):
                 file.write(str(matr[i][j]) + ' ')
 
 
+def prob_bool_choice(prob):
+    return random.random() < prob
+
+
 # maybe do separate util for creation weight matrices
 # for launching from console
 # if __name__ == '__main__':

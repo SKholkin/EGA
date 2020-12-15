@@ -24,3 +24,7 @@ def check_condition(coding):
         if coding[i] > len(coding) - i - 1:
             return False
     return True
+
+
+def upper_boundary(place, coding_length):
+    return coding_length - place - 1
