@@ -1,4 +1,7 @@
 import random
+import os
+import datetime
+from torch.utils.tensorboard import SummaryWriter
 
 
 def create_weigth_matrix_from_file(path):
@@ -55,11 +58,30 @@ def prob_bool_choice(prob):
     return random.random() < prob
 
 
+def prepare_logging():
+    if not os.path.exists('log'):
+        os.mkdir('log')
+
+
+def get_file_writer():
+    current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    return SummaryWriter(log_dir=f'log/{current_time}')
+
+class Averagemeter:
+    def __init__(self):
+        self.count = 0
+        self.value = 0
+        self.total = 0
+
+    def update(self, value):
+        self.total += value
+        self.count += 1
+        self.value = self.total / self.count
+
 # maybe do separate util for creation weight matrices
 # for launching from console
-# if __name__ == '__main__':
-#    length = 10
-#    matr = create_weight_matrix(15, max_weight=20)
-#    write_matr_into_file(matr, 'configs/15len_matr.txt')
-#    matr = create_weigth_matrix_from_file('configs/15len_matr.txt')
-#    pass
+if __name__ == '__main__':
+    length = 10
+    matr = create_weight_matrix(100, max_weight=20)
+    write_matr_into_file(matr, 'configs/100len_matr.txt')
+    matr = create_weigth_matrix_from_file('configs/100len_matr.txt')

@@ -1,15 +1,13 @@
-import random
-from common import hamming_distance
 import numpy as np
 
 
-def selection(population, config, criterio):
-    if config.selection.algorithm == 'PAM':
-        result = PosAssMating(population, criterio, config.selection.get('ratio', 0) * len(population))
-    elif config.selection.algorithm == 'NAM':
-        result = NegAssMating(population, criterio, config.selection.get('ratio', 0) * len(population))
+def breeding(population, config, criterio):
+    if config.breeding.algorithm == 'PAM':
+        result = PosAssMating(population, criterio, config.breeding.get('ratio', 0) * len(population))
+    elif config.breeding.algorithm == 'NAM':
+        result = NegAssMating(population, criterio, config.breeding.get('ratio', 0) * len(population))
     else:
-        result = panmixia(population, config.selection.get('ratio', None) * len(population))
+        result = panmixia(population, config.breeding.get('ratio', None) * len(population))
     result = list(result)
     return [list(i) for i in result]
 
@@ -72,7 +70,7 @@ def inbreeding(population, amount=None, mode='k'):
     elif mode == 'dual':
         inbreeding_dual(population, amount)
     else:
-        raise AttributeError('Wrong inbreeding mode selection')
+        raise AttributeError('Wrong inbreeding mode breed')
 
 
 def inbreeding_k(population, amount):

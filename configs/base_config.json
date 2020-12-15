@@ -1,19 +1,24 @@
 {
-    "length" : 10,
+    "length" : 100,
     "initialization": {
         "algotithm": "nearest_city",
-        "amount": 20
+        "amount": 100
     },
-    "weight_matrix": "configs/10len_matr.txt",
-    "selection": {
+    "weight_matrix": "configs/100len_matr.txt",
+    "breeding": {
         "algorithm": "NAM",
-        "ratio": 0.1
+        "ratio": 1
     },
     "mutation": {
         "algorithm": "saltation",
-        "to_mutate": 5,
-        "prob": 0.5,
+        "to_mutate": 50,
+        "prob": 0.1,
         "is_additional": false
     },
+    "selection": {
+        "algorithm": "proportional",
+        "elite_ratio": 0.01
+    },
+    "gen_overlap": 0.3,
     "crossover": "single"
 }
