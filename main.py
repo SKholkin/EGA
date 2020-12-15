@@ -4,14 +4,14 @@ from config import EGAConfig, create_config
 from selection.selection_from_population import selection
 from crossover.launcher import launch_crossover
 from ordercoding import decode, encode
-
+from mutation.laucher import launch_mutation
 
 # TODO: test this
 class Criterio:
     def __init__(self, weight_matrix):
         self.weight_matrix = weight_matrix
 
-    def __call__(self, vector, order_coding=False, *args, **kwargs):
+    def __call__(self, vector, order_coding=True, *args, **kwargs):
         vector = vector.copy()
         output = 0
         if order_coding:
@@ -29,7 +29,7 @@ def main_worker(config: EGAConfig):
     population = [encode(x) for x in start_pop]
 
     print(population)
-    next_gen_parents = selection(population, config, criterio)
+    evolution_cycle(population, config, criterio, max_iter=10)
     # initializtion(start population)
     # cycle part begin
     # make some pretendents (reproduction/breeding)
@@ -42,6 +42,8 @@ def evolution_cycle(popualtion, config, criterio, max_iter=1000):
     for i in range(max_iter):
         to_breed = selection(popualtion, config, criterio)
         descendants = launch_crossover(to_breed, config)
+        descendants = launch_mutation(descendants, config)
+        pass
         # mutation
         # get mutated descendatns
     pass
