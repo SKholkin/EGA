@@ -7,6 +7,7 @@ from crossover.launcher import launch_crossover
 from ordercoding import decode, encode
 from mutation.laucher import launch_mutation
 from selection.launcher import launch_selection
+from scheduler import create_scheduler
 import numpy as np
 import sys
 
@@ -34,15 +35,17 @@ class Criterio:
 
 # ToDo: implement freeze of some aprt of codings at the end of evolution
 #  (hypopheticaly should be more stable local minima)
+#   also try to calculate time spendings on sorting or another parts of algo
 def main_worker(config: EGAConfig):
     ega_state = EGA_state()
     criterio = Criterio(config.weight_matrix)
+    scheduler = create_scheduler(ega_state, config)
     start_pop = launch_init(config)
     population = [encode(x) for x in start_pop]
+    ega_state.add(('gen_overlap', config.get('gen_overlap', 0.5)))
 
     for i in range(config.get('max_iter', 10000)):
         ega_state.add(('pop_amount', len(population)))
-        ega_state.add(('gen_overlap', 0.5))
 
         population = evolution_cycle(population, config, criterio, ega_state)
 
@@ -52,8 +55,18 @@ def main_worker(config: EGAConfig):
         mean_criterio_averagemetr.update(ega_state.mean_criterio)
         tb_logger.add_scalar('max_criterio', ega_state.max_criterio, i)
         tb_logger.add_scalar('mean_criterio', mean_criterio_averagemetr.value, i)
+        tb_logger.add_scalar('gen_overlap', ega_state.gen_overlap, i)
         print(f'Max criterio: {ega_state.max_criterio}')
         print(f'Mean criterio: {ega_state.mean_criterio}')
+        print(f'Gen overlap: {ega_state.gen_overlap}')
+
+        if config.get('scheduler', {}).get('mean_or_max', 'max') == 'mean':
+            scheduler.step(mean_criterio_averagemetr.value)
+        else:
+            scheduler.step(ega_state.max_criterio)
+
+        if ega_state.gen_overlap < 0.01:
+            return
 
 
 def evolution_cycle(population, config, criterio, ega_state):
@@ -78,6 +91,7 @@ def evolution_cycle(population, config, criterio, ega_state):
         return descendants
     final_desc = launch_selection(descendants, criterio, config, amount_of_out_desc)
     final_pop = launch_selection(population, criterio, config, amount_of_out_pop)
+
     return final_pop + final_desc + elite_ones
 
 

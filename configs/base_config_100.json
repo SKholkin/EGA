@@ -4,7 +4,7 @@
         "algotithm": "nearest_city",
         "amount": 50
     },
-    "max_iter": 300,
+    "max_iter": 1000,
     "weight_matrix": "configs/100len_matr.txt",
     "breeding": {
         "algorithm": "PAM",
@@ -13,12 +13,17 @@
     "mutation": {
         "algorithm": "saltation",
         "to_mutate": 50,
-        "prob": 0.1
+        "prob": 0.05
     },
     "selection": {
         "algorithm": "proportional",
         "elite_ratio": 0.05
     },
-    "gen_overlap": 0.3,
-    "crossover": "single"
+    "gen_overlap": 0.5,
+    "crossover": "single",
+    "scheduler":{
+        "mean_or_max": "max",
+        "patience": 50,
+        "threshold": 0.01
+    }
 }
