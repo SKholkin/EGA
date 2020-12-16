@@ -1,0 +1,24 @@
+{
+    "length" : 10,
+    "initialization": {
+        "algotithm": "nearest_city",
+        "amount": 10
+    },
+    "max_iter": 100,
+    "weight_matrix": "configs/10len_matr.txt",
+    "breeding": {
+        "algorithm": "PAM",
+        "ratio": 1
+    },  
+    "mutation": {
+        "algorithm": "saltation",
+        "to_mutate": 5,
+        "prob": 0.1
+    },
+    "selection": {
+        "algorithm": "proportional",
+        "elite_ratio": 0.05
+    },
+    "gen_overlap": 0.3,
+    "crossover": "single"
+}
