@@ -24,7 +24,7 @@ def random_choice(population, amount, prob_array=None):
         prob_array = [1 / len(population) for i in range(len(population))]
     mapping_array = np.arange(len(population))
     result = []
-    mapping_array = np.random.choice(mapping_array, size=int(amount), p=prob_array)
+    mapping_array = np.random.choice(mapping_array, size=int(amount), p=prob_array, replace=False)
     for i in mapping_array:
         result.append(population[i])
     return result

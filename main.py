@@ -1,6 +1,6 @@
 from initialization.init import launch_init
 from utils import create_weight_matrix, print_weight_matrix, prepare_logging, \
-    configure_logging, Averagemeter, get_argparser
+    configure_logging, Averagemeter, get_argparser, check_for_copies
 from config import EGAConfig, create_config
 from breed.breeding_from_population import breeding
 from crossover.launcher import launch_crossover
@@ -10,6 +10,7 @@ from selection.launcher import launch_selection
 from scheduler import create_scheduler
 import numpy as np
 import sys
+import random
 
 
 class EGA_state:
@@ -30,7 +31,7 @@ class Criterio:
         for i in range(len(vector) - 1):
             output += self.weight_matrix[vector[i]][vector[i + 1]]
         output += self.weight_matrix[vector[i + 1]][vector[0]]
-        return output
+        return 1 /  output
 
 
 # ToDo: implement freeze of some aprt of codings at the end of evolution
@@ -50,8 +51,8 @@ def main_worker(config: EGAConfig):
         population = evolution_cycle(population, config, criterio, ega_state)
 
         print(f'iter: {i}')
-        ega_state.add(('max_criterio', criterio(max(population, key=criterio))))
-        ega_state.add(('mean_criterio', sum([criterio(vector) for vector in population]) / len(population)))
+        ega_state.add(('max_criterio', 1 / criterio(max(population, key=criterio))))
+        ega_state.add(('mean_criterio', sum([1 / criterio(vector) for vector in population]) / len(population)))
         mean_criterio_averagemetr.update(ega_state.mean_criterio)
         tb_logger.add_scalar('max_criterio', ega_state.max_criterio, i)
         tb_logger.add_scalar('mean_criterio', mean_criterio_averagemetr.value, i)
@@ -76,7 +77,7 @@ def evolution_cycle(population, config, criterio, ega_state):
     descendants = launch_mutation(descendants, config)
     elite_ones = []
 
-    if config.get('selection', {}).get('elite_ratio', None) is not None:
+    if config.get('selection', {}).get('elite_ratio', None) is not None and config.get('selection', {}).get('elite_ratio', 0) * ega_state.pop_amount >= 1:
         # ToDo: maybe switch to more optimizated algo instead of full sorting
         inc_sorted_idx = np.argsort([criterio(vector) for vector in population])
         for i in range(1, int(config.get('selection', {}).get('elite_ratio', None) * ega_state.pop_amount + 1)):
@@ -97,6 +98,7 @@ def evolution_cycle(population, config, criterio, ega_state):
 
 if __name__ == '__main__':
     parser = get_argparser()
+    random.seed(10)
     args = parser.parse_args(args=sys.argv[1:])
     tb_logger = configure_logging(args, log_dir=args.logdir)
     mean_criterio_averagemetr = Averagemeter()

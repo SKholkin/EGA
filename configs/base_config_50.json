@@ -7,13 +7,13 @@
     "max_iter": 500,
     "weight_matrix": "configs/50len_matr.txt",
     "breeding": {
-        "algorithm": "NAM",
+        "algorithm": "PAM",
         "ratio": 1
     },
     "mutation": {
         "algorithm": "saltation",
         "to_mutate": 20,
-        "prob": 0.05
+        "prob": 0.2
     },
     "selection": {
         "algorithm": "proportional",

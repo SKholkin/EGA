@@ -6,6 +6,16 @@ import argparse
 import shutil
 
 
+def check_for_copies(vector, population):
+    for ind in population:
+        count = 0
+        for i in range(len(ind)):
+            if ind[i] == vector[i]:
+                count += 1
+        if count == len(ind):
+            print('FOUND A COPY!')
+
+
 def create_weigth_matrix_from_file(path):
     matr = []
     with open(path, 'r') as w_matr_file:
@@ -91,10 +101,9 @@ def get_argparser():
     parser.add_argument('--logdir', type=str, help='directory for logging into', default='log')
     return parser
 
-
 # maybe do separate util for creation weight matrices
 # for launching from console
-#if __name__ == '__main__':
+# if __name__ == '__main__':
 #    matr = create_weight_matrix(50, max_weight=20)
 #    write_matr_into_file(matr, 'configs/50len_matr.txt')
 #    matr = create_weigth_matrix_from_file('configs/50len_matr.txt')
