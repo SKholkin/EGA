@@ -1,6 +1,5 @@
 from initialization.init import launch_init
-from utils import create_weight_matrix, print_weight_matrix, prepare_logging, \
-    configure_logging, Averagemeter, get_argparser, check_for_copies
+from utils import Averagemeter, get_argparser
 from config import EGAConfig, create_config
 from breed.breeding_from_population import breeding
 from crossover.launcher import launch_crossover
@@ -100,7 +99,6 @@ if __name__ == '__main__':
     parser = get_argparser()
     random.seed(10)
     args = parser.parse_args(args=sys.argv[1:])
-    tb_logger = configure_logging(args, log_dir=args.logdir)
     mean_criterio_averagemetr = Averagemeter()
     config = create_config(args.config)
     main_worker(config)

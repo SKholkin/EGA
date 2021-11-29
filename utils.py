@@ -1,9 +1,6 @@
 import random
 import os
-import datetime
-from torch.utils.tensorboard import SummaryWriter
 import argparse
-import shutil
 
 
 def check_for_copies(vector, population):
@@ -75,14 +72,6 @@ def prepare_logging():
         os.mkdir('log')
 
 
-def configure_logging(args, log_dir='log'):
-    current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    log_dir = log_dir + '/' + current_time
-    os.mkdir(log_dir)
-    shutil.copy(args.config, log_dir + '/' + 'config.json')
-    return SummaryWriter(log_dir=log_dir)
-
-
 class Averagemeter:
     def __init__(self):
         self.count = 0
@@ -100,10 +89,3 @@ def get_argparser():
     parser.add_argument('--config', type=str, help='path to config')
     parser.add_argument('--logdir', type=str, help='directory for logging into', default='log')
     return parser
-
-# maybe do separate util for creation weight matrices
-# for launching from console
-# if __name__ == '__main__':
-#    matr = create_weight_matrix(50, max_weight=20)
-#    write_matr_into_file(matr, 'configs/50len_matr.txt')
-#    matr = create_weigth_matrix_from_file('configs/50len_matr.txt')
