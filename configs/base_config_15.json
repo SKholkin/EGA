@@ -1,11 +1,11 @@
 {
-    "length" : 10,
+    "length" : 15,
     "initialization": {
         "algotithm": "nearest_neighbor",
-        "amount": 10
+        "amount": 15
     },
     "max_iter": 100,
-    "weight_matrix": "configs/10len_matr.txt",
+    "weight_matrix": "configs/15len_matr.txt",
     "breeding": {
         "ratio": 1
     },  

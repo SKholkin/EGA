@@ -4,7 +4,8 @@ from selection.algo_copy import roulette
 
 def launch_selection(descendants, criterio, config, amount_of_out):
     if config.get('algorithm', None) == 'ranking':
-        raise NotImplementedError("ranking selection algorithm isn't check yet")
+        #raise NotImplementedError("ranking selection algorithm isn't check yet")
+        prob_array = ranking(descendants, criterio)
     else:
         # ToDo: implement func choice
         prob_array = proportional(descendants, criterio)

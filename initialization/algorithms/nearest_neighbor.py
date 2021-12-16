@@ -10,7 +10,7 @@ def choose_neighbor(vector, weight_matrix):
             min_dist_index = i
     return min_dist_index
 
-
+# Ближайший сосед
 def nearest_neighbor_method(weight_matrix, length=None, first_city=None, verbose=False):
     if length is None:
         length = len(weight_matrix)

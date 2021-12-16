@@ -1,3 +1,4 @@
+
 def encode(coding: list):
     normal_order = [i for i in range(len(coding))]
     order_coding = []

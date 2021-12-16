@@ -12,6 +12,12 @@ def check_for_copies(vector, population):
         if count == len(ind):
             print('FOUND A COPY!')
 
+def check_float(potential_float):
+    try:
+        float(potential_float)
+        return True
+    except ValueError:
+        return False
 
 def create_weigth_matrix_from_file(path):
     matr = []
@@ -21,8 +27,8 @@ def create_weigth_matrix_from_file(path):
         for i in range(len(matr_lines)):
             line = []
             for j in range(len(matr_lines[i].split())):
-                if matr_lines[i].split()[j].isdigit():
-                    line.append(int(matr_lines[i].split()[j]))
+                if check_float(matr_lines[i].split()[j]):
+                    line.append(float(matr_lines[i].split()[j]))
             matr.append(line)
     return matr
 

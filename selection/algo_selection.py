@@ -5,17 +5,15 @@ from ordercoding import decode
 # input: descendats
 # output: prob array
 
+# Пропорциональная схема селекции
 def proportional(descendats, criterio, func=None):
-    if func is None:
-        func = Linear(1, 0)
-    sum_criterio = sum(func(criterio(vector)) for vector in descendats)
+    sum_criterio = sum(criterio(vector) for vector in descendats)
     prob_array = []
     for desc in descendats:
-        prob_array.append(func(criterio(desc)) / sum_criterio)
+        prob_array.append(criterio(desc) / sum_criterio)
     return prob_array
 
 
-# ToDo: check is it working
 def ranking(descendtans, criterio, n_plus=None, n_minus=None):
     if n_plus is None or n_minus is None:
         n_minus = 0
@@ -23,6 +21,8 @@ def ranking(descendtans, criterio, n_plus=None, n_minus=None):
     linear = Linear(n_plus - n_minus, n_minus)
     sorted_desc = sorted(descendtans, key=lambda x: criterio(x))
     prob_array = []
+    # n_k = (n_plus - n_minus) * i / (len(descendtans))
+    # p_k = n_k / len(descendtans)
     for i in range(len(sorted_desc)):
         prob_array.append(linear(i) / len(descendtans))
     return prob_array
